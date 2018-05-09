@@ -1,0 +1,15 @@
+@(user: User)
+
+@main(user) {
+    <div class="col-sm-12 content">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>
+                    <a href="@routes.UserController.viewUserReport()">Vartotojų ataskaita</a><br>
+                    <a href="@routes.UserController.viewDateReport()">Ataskaita pagal datą</a><br>
+                    <a href="@routes.UserController.viewLoginStatsReport()">Prisijungimų ataskaita</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+}

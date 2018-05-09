@@ -1,0 +1,50 @@
+@(user: User, categories: List[DocumentCategory], message: String)
+
+@main(user) {
+<div class="col-sm-12 content">
+    <div class="title-container">
+        <div class="title-h2">
+            <h2>Kategorijos
+                <div class="pull-right">
+                    <a href="@routes.DocumentsCategoryController.createBlank()"> <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Pridėti</a>
+                </div>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+    @if(message != null) {
+        <div class="col-sm-12 margin-t-10">
+            <div class="alert alert-warning">
+                <strong>@message</strong>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <thead>
+                    <tr>
+                        <th>Pavadinimas</th>
+                        <th>Trinti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(cat <- categories){
+                         <tr>
+                             @if(cat.is_permission_required){
+                                 <td style="color: #9a9999"><a href="@routes.DocumentsController.blank(cat.document_category_id)">@cat.name</a></td>
+                             } else {
+                                 <td><a href="@routes.DocumentsController.blank(cat.document_category_id)">@cat.name</a></td>
+                             }
+                             @if(user.user_level >= 3){<td><a href="@routes.DocumentsCategoryController.delete(cat.document_category_id)" onclick="return confirm('Ar tikrai norite ištrinti kategoriją?');"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>Trinti</a></td>}
+                         </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+}

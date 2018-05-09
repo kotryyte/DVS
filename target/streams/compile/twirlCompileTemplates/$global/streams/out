@@ -1,0 +1,4 @@
+[error] /home/mindaugas/Documents/PlayApplication/app/views/user/docReportSummary.scala.html:13: Expected '}' but found 'EOF'
+[error] </div>
+[error]       ^
+[error] (compile:twirlCompileTemplates) Twirl compilation failed

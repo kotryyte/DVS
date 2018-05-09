@@ -1,0 +1,84 @@
+@import forms.CreateAdvertisementForm
+@(user: User, jobAdvertisement: JobAdvertisement, advertisementForm: Form[CreateAdvertisementForm],message: String)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Sukurti darbo skelbimą</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+    @form(routes.AdvertisementsController.create(), 'class -> "form", 'enctype -> "multipart/form-data") {
+        @if(message != null) {
+            <div class="col-sm-12 margin-t-10">
+                <div class="alert alert-success">
+                    <strong>Duomenys atnaujinti!</strong>@message
+                </div>
+            </div>
+        }
+
+        <div class="col-sm-12">
+            @if(advertisementForm.hasGlobalErrors) {
+                <p class="error">
+                    <span class="label label-danger">@advertisementForm.globalError.message</span>
+                </p>
+            }
+
+            <fieldset>
+                @inputText(
+                    advertisementForm("title"),
+                    'placeholder -> Messages("form.title"),
+                    '_label -> Messages("form.title"),
+                    'required -> false,
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+
+            )
+                @inputText(
+                    advertisementForm("category"),
+                    'placeholder -> Messages("category"),
+                    '_label -> Messages("category"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @textarea(
+                    advertisementForm("description"),
+                    '_label -> Messages("form.description"),
+                    'rows -> "4",
+                    'placeholder -> "Aprasymas",
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    advertisementForm("city"),
+                    '_label -> Messages("city"),
+                    'rows -> "2",
+                    'placeholder -> "Kaunas",
+                    '_help -> Messages("author"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    advertisementForm("salary"),
+                    '_label -> Messages("salary"),
+                    'rows -> "2",
+                    'placeholder -> "1000$",
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+            </fieldset>
+
+            <div class="form-actions margin-t-10">
+                <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+            </div>
+
+        </div>
+    </div>
+}
+
+
+}

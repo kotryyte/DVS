@@ -1,0 +1,47 @@
+@(signupForm: Form[Application.Register])
+
+@import helper._
+    @implicitFieldConstructor = @{
+        FieldConstructor(twitterBootstrapInput.render)
+    }
+<div class="logo-container flex-cont">
+    <img class="flex-item" src="@routes.Assets.at("images/logo.png")">
+</div>
+<h3>@Messages("signup.new")</h3>
+
+@form(controllers.account.routes.Signup.save()) {
+
+    <fieldset>
+        @inputText(
+            signupForm("email"),
+            'placeholder -> Messages("email"),
+            '_label -> null,
+            'required ->true,
+            'class -> "form-control"
+        )
+        @inputPassword(
+            signupForm("inputPassword"),
+            '_label -> null,
+            'placeholder -> Messages("password"),
+            'required ->true,
+            'class -> "form-control"
+        )
+        @inputPassword(
+            signupForm("repeatPassword"),
+            '_label -> null,
+            'placeholder -> Messages("password"),
+            'required ->true,
+            'class -> "form-control"
+        )
+        @checkbox(
+            signupForm("isCompanyRepresentative"),
+            '_label -> "Ar esate kompanija?",
+            'class -> "form-control"
+        )
+    </fieldset>
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="@Messages("signup.signup")">
+    </div>
+}
+

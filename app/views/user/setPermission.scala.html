@@ -1,0 +1,71 @@
+@import forms.CreateDocumentForm
+@import forms.CreateDocumentCategoryPermissionForm
+@(user: User, permissionForm: Form[CreateDocumentCategoryPermissionForm], userId: Long, message: String, categories: List[DocumentCategory], permissions: List[CategoryPermission])
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Suteikti prieigą vartotojui @User.getUserByUserId(userId).email</h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+        @form(routes.UserController.setPermissionCreate(userId), 'class -> "form", 'enctype -> "multipart/form-data") {
+            @if(message != null) {
+                <div class="col-sm-12 margin-t-10">
+                    <div class="alert alert-success">
+                        <strong>@message</strong>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-12">
+                @if(permissionForm.hasGlobalErrors) {
+                    <p class="error">
+                        <span class="label label-danger">@permissionForm.globalError.message</span>
+                    </p>
+                }
+
+                <fieldset>
+                    @select(
+                        permissionForm("categoryName"),
+                        options(models.DocumentCategory.getPermitedCats().map(f => f.name)),
+                        'placeholder -> Messages("file.title"),
+                        '_label -> "Kategorijos pavadinimas",
+                        'class -> "form-control"
+                    )
+
+                    <input type="hidden" name="userId" value='@userId'>
+                </fieldset>
+
+                <div class="form-actions margin-t-10">
+                    <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                </div>
+
+            </div>
+        </div>
+        }
+
+        <table cellpadding="0" cellspacing="0" width="80%" class="table">
+            <thead>
+                <tr>
+                    <th>Kategorija</th>
+                    <th>Trinti</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(perm <- permissions){
+                <tr>
+                    <td>@perm.category.name</td>
+                    <td><a href="@routes.UserController.deletePerm(perm.category_permission_id, userId)"> <i class="fa fa-remove fa-lg" aria-hidden="true"></i> Trinti</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+
+
+}

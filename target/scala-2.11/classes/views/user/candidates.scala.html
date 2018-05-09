@@ -1,0 +1,51 @@
+@import forms.AdvertisementSearchForm
+@(user: User, candidates: List[Candidate])
+
+@main(user) {
+<div class="col-sm-12 content">
+    <div class="title-container">
+        <div class="title-h2">
+            <h2>Kandidatai i darbo vietas</h2>
+        </div>
+    </div>
+    <div class="row">
+<!-- Gal bus filtrai -->
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @if(!candidates.isEmpty) {
+                <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Skelbimas</th>
+                            <th>Vardas</th>
+                            <th>Pavarde</th>
+                            <th>El.Pastas</th>
+                            @*<th></th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(cand <- candidates) {
+                        <tr>
+                            <td></td>
+                            <td><a href="@routes.AdvertisementsController.viewAdvertisement(cand.getAdvertisement.job_advertisement_id)"> @cand.getAdvertisement.job_title</a></td>
+                            <td>@cand.getUser.getUserDescription.user_name</td>
+                            <td>@cand.getUser.getUserDescription.user_surname</td>
+                            <td>@cand.getUser.email</td>
+                            @*
+                            <th><a href="@routes.AdvertisementsController.removeExibit(exibit.exibitId)"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></th>
+                            *@
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }else {
+            Jus neturite kandidatu
+        }
+        </div>
+    </div>
+</div>
+
+
+}

@@ -1,0 +1,46 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                            controllers.Application.signUp()
+GET     /dashboard/profile.html                      controllers.UserController.blank()
+GET     /dashboard/user/admin/userList.html          controllers.UserController.viewAllUsers()
+GET    /dashboard/user/admin/userList/ban/:userId.html       controllers.UserController.banUser(userId: Long)
+GET    /dashboard/user/setPermission/:userId.html    controllers.UserController.setPermissionBlank(userId: Long)
+POST   /dashboard/user/setPermission/:userId.html    controllers.UserController.setPermissionCreate(userId: Long)
+GET    /dashboard/user/setLevel/:userId.html         controllers.UserController.setLevelBlank(userId: Long)
+POST   /dashboard/user/setLevel/:userId.html         controllers.UserController.setLevelCreate(userId: Long)
+GET    /dashboard/reports.html                       controllers.UserController.viewDocsReport()
+GET    /dashboard/reports/dateReport.html            controllers.UserController.viewDateReport()
+GET    /dashboard/reports/userReport.html            controllers.UserController.viewUserReport()
+POST   /dashboard/reports/userReport.html            controllers.UserController.viewUserReportInfo()
+POST   /dashboard/reports/dateReport.html            controllers.UserController.viewDateReportInfo()
+GET    /dashboard/user/setPermission/delete/:permId-:userId.html  controllers.UserController.deletePerm(permId: Long, userId: Long)
+GET    /dashboard/reports/loginStatsReport.html      controllers.UserController.viewLoginStatsReport()
+POST   /dashboard/reports/loginStatsReport.html      controllers.UserController.viewLoginStatsReportInfo()
+
+GET    /dashboard/documents.html                     controllers.DocumentsController.categories()
+GET    /dashboard/:categoryId/documents.html         controllers.DocumentsController.blank(categoryId : Long)
+GET    /dashboard/documents/create.html              controllers.DocumentsController.createBlank()
+POST   /dashboard/documents/create.html              controllers.DocumentsController.create()
+GET    /dashboard/documents/download/:documentId.html controllers.DocumentsController.downloadFile(documentId: Long)
+GET    /dashboard/documents/edit/:documentId.html    controllers.DocumentsController.edit(documentId: Long)
+GET    /dashboard/documents/delete/:documentId.html  controllers.DocumentsController.deleteDoc(documentId: Long)
+GET    /dashboard/documents/view/:documentId.html    controllers.DocumentsController.viewDoc(documentId: Long)
+POST   /dashboard/documents/view/:documentId.html    controllers.DocumentsController.createComment(documentId: Long)
+GET    /dashboard/documents/category/delete/:catId.html  controllers.DocumentsCategoryController.delete(catId: Long)
+
+GET    /dashboard/documentCategories/create.html     controllers.DocumentsCategoryController.createBlank()
+POST   /dashboard/documentCategories/create.html     controllers.DocumentsCategoryController.create()
+
+
+POST    /login.html                                  controllers.Application.authenticate()
+GET     /logout                                        controllers.Application.logout()
+
+# Registers the user, sending an email to confirm the account.
+GET     /signup.html                             controllers.account.Signup.create()
+POST    /signup.html                             controllers.account.Signup.save()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /public/*file                       controllers.Assets.at(path="/public", file)

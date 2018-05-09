@@ -1,0 +1,29 @@
+@(user: User, jobAdvertisement: JobAdvertisement, isCandidate: Boolean)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>@jobAdvertisement.job_title</h2>
+            </div>
+        </div>
+        <div class="col-sm-6 text-center">
+        @jobAdvertisement.job_description
+        </div>
+    </div>
+    <div class="col-sm-6">
+    @form(routes.AdvertisementsController.applyForJob(jobAdvertisement.job_advertisement_id), 'class -> "form", 'enctype -> "multipart/form-data") {
+        <div class="col-sm-12">
+            @if(!isCandidate) {
+            <div class="form-actions margin-t-10">
+                <input type="submit" class="btn btn-primary" value="Aplikuoti">
+            </div>
+            }
+        </div>
+    </div>
+}
+
+
+}

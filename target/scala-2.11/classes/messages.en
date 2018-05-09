@@ -1,0 +1,66 @@
+title=DVS
+## Prisijungimo duomenų tekstai
+confirm=Confirmation
+email=Email
+category=Kategorija
+goback=Atgal
+logout=Atsijungti
+password=Slaptažodis
+error.technical=Technical Error, please Retry
+account.not.validated.check.mail=Neturite pakankamo lygio prisijungti.
+invalid.user.or.password=Neteisingi prisijungimo duomenys
+youve.been.logged.out=You've been logged out
+error.sending.email=Error sending email
+error.sending.confirm.email=Error while sending confirmation mail
+error.email.already.exist=Email already exist
+error.unknown.email=Unknown email
+error.confirm=Confirmation failed
+
+account.settings.password=Click OK to receive instructions by mail.
+account.settings.email=Enter your new email address. Click OK to receive instructions on this new mail.
+
+signin.signin=Prisijungti
+signin.your.email=Your email address
+signin.your.password=Your password
+
+forgot.password=Pamiršai slaptažodį ?
+
+signup.signup=Sign Up
+signup.successfull= Sign Up - Successful !
+signup.new= Registracija
+signup.reset.password=Reset your password
+signup.generate.password=Generate a password
+signup.msg.created=Dabar galite prisijungti.
+signup.valid.email=Invalid Email
+
+resetpassword.success=Your password has been reset.
+resetpassword.new.password=New password :
+
+mail.confirm.message=Welcome to PlayStartApp. <br> Click on this link : {0} to confirm your email.
+
+mail.welcome.message=Welcome to PlayStartApp. <br> Your account is validated. Enjoy !
+
+# Cannot use You've unescaped here, as the single quote stops the {0}
+mail.reset.ask.message=You asked for your password to be reset.  <br> Click on this link : {0} to change your password.
+
+mail.change.ask.subject=
+mail.change.ask.message=
+
+mail.reset.fail.message=
+
+mail.reset.confirm.message=Hello, <br><br> Your password has been reset.
+
+user = vartotojas/-ai
+#-------
+submit.button = Sukurti
+form.title = Pavadinimas
+form.success =
+description = Aprašymas
+name = Pavadinimas
+bad.type = Blogas paveikslo tekstūros tipas.Galimi du tipai png arba jpg.
+
+#User
+user.name = Vardas
+#Files
+file.file = File
+file.title = Title

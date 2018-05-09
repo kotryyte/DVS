@@ -1,0 +1,83 @@
+@import forms.CreateDocumentCommentForm
+@import org.joda._
+@import java.util.Date
+@(user: User, document: Document, comments: List[DocumentComment], commentForm: Form[CreateDocumentCommentForm])
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2><a href="@routes.DocumentsController.blank(document.category.document_category_id)"> <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i></a>
+                @document.title
+                </h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <tbody>
+                    <tr>
+                        <th>Failo pavadinimas</th>
+                        <td>@document.file_name</td>
+                    </tr>
+                    <tr>
+                        <th>Sukūrimo data</th>
+                        <td>@document.date_created</td>
+                    </tr>
+                    <tr>
+                        <th>Kategorija</th>
+                        <td>@document.category.name</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                    </tr>
+                    @if(user.user_level >= 3) {
+                        <tr>
+                            <th>Redaguoti</th>
+                            <td><a href="@routes.DocumentsController.edit(document.document_id)"> <i class="fa fa-edit fa-lg" aria-hidden="true"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <div class="col-sm-6">
+        @form(routes.DocumentsController.createComment(document.document_id), 'class -> "form", 'enctype -> "multipart/form-data") {
+            <div class="form-actions margin-t-10">
+            <fieldset>
+                @textarea(
+                commentForm("content"),
+                '_label -> "Komentaras",
+                'rows -> "4",
+                'placeholder -> "Komentaras",
+                '_help -> Messages("null"),
+                'class -> "form-control"
+                )
+                <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+            </fieldset>
+            </div>
+        }
+        <div class="col-sm-12">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <thead>
+                    <tr>
+                        <th>Autorius</th>
+                        <th>Komentaras</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(com <- comments){
+                    <tr>
+                        <td>@com.user.email</td>
+                        <td>@com.content</td>
+                        <td>@com.date_created.toDateTime</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

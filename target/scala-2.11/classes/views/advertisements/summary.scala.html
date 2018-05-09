@@ -1,0 +1,47 @@
+@import forms.AdvertisementSearchForm
+@(user: User, advertisements: List[JobAdvertisement], searchForm: Form[AdvertisementSearchForm])
+
+@main(user) {
+<div class="col-sm-12 content">
+    <div class="title-container">
+        <div class="title-h2">
+            <h2>Darbo skelbimai</h2>
+        </div>
+    </div>
+    <div class="row">
+<!-- Gal bus filtrai -->
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Pavadinimas</th>
+                        <th>Kategorija</th>
+                        <th>Miestas</th>
+                        <th>Atlyginimas</th>
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                @for(ad <- advertisements){
+                         <tr>
+                             <th><a href="@routes.AdvertisementsController.viewAdvertisement(ad.job_advertisement_id)"> <i class="fa fa-search fa-lg" aria-hidden="true"></i></a></th>
+                             <th>@ad.job_title</th>
+                             <th>@ad.job_category</th>
+                             <th>@ad.job_place</th>
+                             <th>@ad.job_salart</th>
+@*
+                             <th><a href="@routes.AdvertisementsController.removeExibit(exibit.exibitId)"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></th>
+*@
+                         </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+}

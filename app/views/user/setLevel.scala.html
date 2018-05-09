@@ -1,0 +1,59 @@
+@import forms.CreateUserLevelForm
+@(user: User, levelForm: Form[CreateUserLevelForm], userId: Long, message: String)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Suteikti lygį vartotojui @User.getUserByUserId(userId).email</h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+        @form(routes.UserController.setLevelCreate(userId), 'class -> "form", 'enctype -> "multipart/form-data") {
+            @if(message != null) {
+                <div class="col-sm-12 margin-t-10">
+                    <div class="alert alert-success">
+                        <strong>@message</strong>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-12">
+                @if(levelForm.hasGlobalErrors) {
+                    <p class="error">
+                        <span class="label label-danger">@levelForm.globalError.message</span>
+                    </p>
+                }
+
+                <fieldset>
+                    @select(
+                        levelForm("userLevel"),
+                        options = Seq(
+                            "1" -> "1 Lygmuo",
+                            "2" -> "2 Lygmuo",
+                            "3" -> "3 Lygmuo",
+                            "4" -> "4 Lygmuo",
+                            "5" -> "5 Lygmuo"
+                        ),
+                        'placeholder -> "Lygmuo",
+                        '_label -> "Lygmuo",
+                        'class -> "form-control"
+                    )
+
+                    <input type="hidden" name="userId" value='@userId'>
+                </fieldset>
+
+                <div class="form-actions margin-t-10">
+                    <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                </div>
+
+            </div>
+        </div>
+        }
+    </div>
+
+
+
+}

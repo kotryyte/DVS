@@ -1,0 +1,50 @@
+@(user: User, documents: List[Document], category: DocumentCategory)
+
+@main(user) {
+<div class="col-sm-12 content">
+    <div class="title-container">
+        <div class="title-h2">
+            <h2>
+                <a href="@routes.DocumentsController.categories()"> <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i></a>
+                Dokumentai (@category.name)
+                <div class="pull-right">
+                    <a href="@routes.DocumentsController.createBlank()"> <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Pridėti</a>
+                </div>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+<!-- Gal bus filtrai -->
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Failas</th>
+                        <th>Aprašymas</th>
+                        <th>Kategorija</th>
+                        <th>Atsisiųsti</th>
+                        <th>Ištrinti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(doc <- documents){
+                         <tr>
+                             <td><a href="@routes.DocumentsController.viewDoc(doc.document_id)"> <i class="fa fa-search fa-lg" aria-hidden="true"></i></a></td>
+                             <td>@doc.file_name</td>
+                             <td>@doc.title</td>
+                             <td>@doc.category.name</td>
+                             <td><a href="@routes.DocumentsController.downloadFile(doc.document_id)"> <i class="fa fa-download fa-lg" aria-hidden="true"></i></a></td>
+                             @if(user.user_level >= 3){<td><a href="@routes.DocumentsController.deleteDoc(doc.document_id)" onclick="return confirm('Ar tikrai norte ištrinti dokumentą?');"> <i class="fa fa-remove fa-lg" aria-hidden="true"></i></a></td>}
+                         </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+}

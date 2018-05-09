@@ -1,0 +1,69 @@
+@import forms.CreateDocumentForm
+@(user: User, documentForm: Form[CreateDocumentForm], message: String, categories: List[DocumentCategory])
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Upload file</h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+        @form(routes.DocumentsController.create(), 'class -> "form", 'enctype -> "multipart/form-data") {
+            @if(message != null) {
+                <div class="col-sm-12 margin-t-10">
+                    <div class="alert alert-success">
+                        <strong>File uploaded!</strong>@message
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-12">
+                @if(documentForm.hasGlobalErrors) {
+                    <p class="error">
+                        <span class="label label-danger">@documentForm.globalError.message</span>
+                    </p>
+                }
+
+                <fieldset>
+                    @inputFile(
+                        documentForm("content"),
+                        'placeholder -> "Failas",
+                        '_label -> "Failas",
+                        'required -> false,
+                        '_help -> Messages("null"),
+                        'class -> "form-control"
+
+                    )
+                    @inputText(
+                        documentForm("title"),
+                        'placeholder -> "Aprašymas",
+                        '_label -> "Aprašymas",
+                        '_help -> Messages("null"),
+                        'class -> "form-control"
+                    )
+                    @select(
+                        documentForm("category"),
+                        options(models.DocumentCategory.getAllCategories().map(f => f.name)),
+                        'placeholder -> "Kategorija",
+                        '_label -> "Kategorija",
+                        'class -> "form-control"
+                    )
+
+                    <input type="hidden" name="documentId" value='@documentForm("documentId").value' >
+                </fieldset>
+
+                <div class="form-actions margin-t-10">
+                    <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                </div>
+
+            </div>
+        </div>
+        }
+    </div>
+
+
+
+}

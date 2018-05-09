@@ -1,0 +1,54 @@
+@(user: User = null, scripts: Html = Html(""))(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@Messages("title")</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <script src="@routes.Assets.at("javascripts/jquery/jquery-2.1.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/font-awesome.min.css")">
+
+        @scripts
+    </head>
+    <body>
+
+        <div ng-controller="MenuCtrl" class="row nav-container" role="navigation">
+            <div class="col-sm-2 navi">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="@routes.DocumentsController.categories()">
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-10 navi-left">
+                @logged(user)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 navigation">
+                <ul class="main-navigation">
+                    <li><a href="@routes.DocumentsController.categories()"><i class="fa fa-home navigation-fa"></i>Pagrindinis</a></li>
+                    <li></li>
+                    <li><a href="@routes.UserController.blank()"><i class="fa fa fa-user-circle navigation-fa"></i>Profilis</a></li>
+                    @if(user.user_level >= 5) {
+                        <li><a href="@routes.UserController.viewAllUsers()"><i class="fa fa fa-list navigation-fa"></i>Vartotojai</a></li>
+                        <li><a href="@routes.UserController.viewDocsReport()"><i class="fa fa fa-paper-plane navigation-fa"></i>Ataskaita</a></li>
+                    }
+                    <li><a href="@routes.Application.logout()"><i class="fa fa fa-power-off navigation-fa"></i>Atsijungti</a></li>
+                </ul>
+            </div>
+            <div class="container col-sm-10">
+                <div class="row main-bg">
+                @content
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

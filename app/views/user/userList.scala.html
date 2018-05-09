@@ -1,0 +1,73 @@
+@import java.text.SimpleDateFormat
+@import org.joda.time.format.DateTimeFormat
+@(user: User, allUsers: List[User], message: String = null)
+@import org.joda._
+
+@main(user) {
+<div class="col-sm-12 content">
+    <div class="title-container">
+        <div class="title-h2">
+            <h2>User List</h2>
+        </div>
+    </div>
+    <div class="row">
+    @if(message != null) {
+        <div class="col-sm-12 margin-t-10">
+            <div class="alert alert-warning">
+                <strong>@message</strong>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>El. paštas</th>
+                        <th>Registracijos data</th>
+                        <th>Vartotojo lygmuo</th>
+                        <th>Blokuoti</th>
+                        <th>Suteikti prieigą</th>
+                        <th>Suteikti lygmenį</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(user <- allUsers){
+                         <tr>
+                             <td>@user.userId</td>
+                             <td>@user.email</td>
+                             <td>@user.dateCreation</td>
+                             <td>@user.user_level</td>
+                             <td><a href="@routes.UserController.banUser(user.userId)" onclick="return confirm('Ar tikrai norte blokuoti vartotoją?');"> <i class="fa fa-ban fa-lg" aria-hidden="true"></i> Blokuoti</a></td>
+                             <td><a href="@routes.UserController.setPermissionBlank(user.userId)"> <i class="fa fa-plus fa-lg" aria-hidden="true"></i> Prieiga</a></td>
+                             <td><a href="@routes.UserController.setLevelBlank(user.userId)"> <i class="fa fa-plus fa-lg" aria-hidden="true"></i> Lygmuo</a></td>
+                         </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <div id="modal-dialog" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+                    <h3>Patvirtinimas</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Ar norite užblokuoti vartotoją?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="btnYes" class="btn confirm">Yes</a>
+                    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn secondary">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}

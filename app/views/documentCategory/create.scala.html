@@ -1,0 +1,58 @@
+@import forms.CreateDocumentCategoryForm
+@(user: User, categoryForm: Form[CreateDocumentCategoryForm], message: String)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2><a href="@routes.DocumentsController.categories"> <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i></a>
+                    Sukurti naują kategoriją</h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+        @form(routes.DocumentsCategoryController.create(), 'class -> "form", 'enctype -> "multipart/form-data") {
+            @if(message != null) {
+                <div class="col-sm-12 margin-t-10">
+                    <div class="alert alert-success">
+                        <strong>@message</strong>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-12">
+                @if(categoryForm.hasGlobalErrors) {
+                    <p class="error">
+                        <span class="label label-danger">@categoryForm.globalError.message</span>
+                    </p>
+                }
+
+                <fieldset>
+                    @inputText(
+                        categoryForm("categoryName"),
+                        'placeholder -> "Pavadinimas",
+                        '_label -> "Pavadinimas",
+                        '_help -> Messages("null"),
+                        'class -> "form-control"
+                    )
+                    @checkbox(
+                        categoryForm("isPermissionRequired"),
+                        '_label -> "Tik su prieiga"
+                    )
+
+                    <input type="hidden" name="documentId" value='@categoryForm("documentCategoryId").value' >
+                </fieldset>
+
+                <div class="form-actions margin-t-10">
+                    <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                </div>
+
+            </div>
+        </div>
+        }
+    </div>
+
+
+
+}

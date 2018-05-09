@@ -1,0 +1,196 @@
+@import helper._
+
+@(user: User, statsOptionsForm: Form[StatsOptionsController.StatsOptionsForm])
+@scripts = {
+    <script src="@routes.Assets.at("javascripts/stats.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/feedback.js")" type="text/javascript"></script>
+}
+@helper.javascriptRouter("myRoutes")(
+    routes.javascript.StatsController.dayStats,
+    routes.javascript.StatsController.weekStats,
+    routes.javascript.StatsController.monthStats,
+    routes.javascript.StatsController.totalCount,
+    routes.javascript.StatsController.dayStatsExpectation,
+    routes.javascript.StatsController.weekStatsExpectation,
+    routes.javascript.StatsController.monthStatsExpectation,
+    routes.javascript.StatsController.totalStatsExpectation,
+    routes.javascript.FeedbackController.dayFeedback,
+    routes.javascript.FeedbackController.weekFeedback,
+    routes.javascript.FeedbackController.monthFeedback,
+    routes.javascript.FeedbackController.totalFeedback
+)
+
+
+@main(user, scripts) {
+
+    <div class="col-sm-12 content">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Sveiki @user.userName, </h2>
+                <p>Prisijungėte prie darbo skelbimų portalo. Pateikiame jums lankomumo statistiką.</p>
+            </div>
+        </div>
+        <div class="row margin-t-10">
+            <div class="col-sm-3 stat-box">
+                <div class="row">
+                    <h4>Mus aplankė</h4>
+                </div>
+                <div class="circular-container">
+                    <div class="wrapper"><div class="wrapper-fill"><div class="wrapper-animation"></div></div></div>
+
+                </div>
+                <div class="row totalCount"><h3 class="total">@Messages("user")</h3></div>
+
+            </div>
+
+            <div class="col-sm-3 stat-box feed-box">
+                <!-- Switch -->
+
+                <div id="slider">
+                    <a href="#" class="control_next">></a>
+                    <a href="#" class="control_prev"><</a>
+                    <ul>
+                        <li>@Messages("today")</li>
+                        <li>@Messages("week")</li>
+                        <li>@Messages("month")</li>
+                        <li>@Messages("total")</li>
+                    </ul>
+                </div>
+                <!-- Like button -->
+                <div class="row flex-cont feed-buttons">
+                    <div class="col-sm-4">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-thumbs-up fa-2x fa-stack-1x fa-inverse"></i>
+                        </span>
+                     </div>
+                    <div class="col-sm-8">
+                        <div class="center-relative">
+                            <div class="like-feed-count"></div>
+                            <span class="feed-text">@Messages("positiveFeed")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dislike button -->
+                <div class="row flex-cont feed-buttons">
+                    <div class="col-sm-4">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle btn-red fa-stack-2x"></i>
+                            <i class="fa fa-thumbs-down fa-2x fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="center-relative">
+                            <div class="dislike-feed-count"></div>
+                            <span class="feed-text">@Messages("negativeFeed")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 stat-box stats-box">
+                <div class="row relative">
+                    <h4 class="stats-h4"> Lankomumas
+                        <span class="options-button" data-toggle="modal" data-target="#myModal"><i class="fa fa-cog fa-spin-hover fa-1-5x" aria-hidden="true"></i></span>
+                    </h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>@Messages("today")</h5>
+                    </div>
+                    <div class="col-sm-6 today-value"></div>
+                </div>
+                <div class="stats-row">
+                <div class="stats-inside today"></div>
+            </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>@Messages("week")</h5>
+                    </div>
+                    <div class="col-sm-6 week-value"></div>
+                </div>
+                <div class="stats-row">
+                    <div class="stats-inside week"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>@Messages("month")</h5>
+                    </div>
+                    <div class="col-sm-6 month-value"></div>
+                </div>
+                <div class="stats-row">
+                    <div class="stats-inside month"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bootstrap modal for parameters -->
+            <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Nustatymai</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Siekiant tikslesnių statistinių skaiciavimų nustatykite siekiamus muziejaus peržiūrų tikslus mėnesiui, savaitei, dienai.</p>
+
+                        <div class="row">
+
+                        @form(routes.StatsOptionsController.updateStatsOptions, 'class -> "form", 'enctype -> "multipart/form-data") {
+                            <div class="col-sm-6 padding-l-20">
+                            @inputText(
+                                statsOptionsForm("todayExpectation"),
+                                'placeholder -> Messages("10"),
+                                '_label -> Messages("today"),
+                                '_help -> Messages("null"),
+                                'class -> "form-control"
+                            )
+                            @inputText(
+                                statsOptionsForm("weekExpectation"),
+                                'placeholder -> Messages("10"),
+                                '_label -> Messages("week"),
+                                '_help -> Messages("null"),
+                                'class -> "form-control"
+                            )
+                            @inputText(
+                                statsOptionsForm("monthExpectation"),
+                                'placeholder -> Messages("10"),
+                                '_label -> Messages("month"),
+                                '_help -> Messages("null"),
+                                'class -> "form-control"
+                            )
+                            @inputText(
+                                statsOptionsForm("totalExpectation"),
+                                'placeholder -> Messages("10"),
+                                '_label -> Messages("total"),
+                                '_help -> Messages("null"),
+                                'class -> "form-control"
+                            )
+                            </div>
+                            <div class="form-actions options">
+                                <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                            </div>
+                        }
+                        </div>
+                    </div>
+
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+}

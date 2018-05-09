@@ -1,0 +1,59 @@
+@import forms.UserReportForm
+@(user: User, users: List[User], myForm: Form[UserReportForm], docs: List[Document])
+@import helper._
+
+@main(user) {
+    <div class="col-sm-12 content">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>
+                    <a href="@routes.UserController.viewDocsReport()"> <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i> Ataskaitos</a>
+                </h2>
+            </div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 30px;">
+        @form(routes.UserController.viewUserReportInfo(), 'class -> "form", 'enctype -> "multipart/form-data"){
+            <div class="col-sm-12">
+                <fieldset>
+                    @select(
+                        myForm("userMail"),
+                        options(models.User.getAllUsers().map(f => f.email)),
+                        'placeholder -> "El. paštas",
+                        '_label -> "El. paštas",
+                        'class -> "form-control"
+                    )
+                </fieldset>
+
+                <div class="form-actions margin-t-10">
+                    <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+                </div>
+
+            </div>
+        </div>
+        }
+        @if(docs != null) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <table cellpadding="0" cellspacing="0" width="80%" class="table">
+                        <thead>
+                            <tr>
+                                <th>Failo pavadinimas</th>
+                                <th>Aprašymas</th>
+                                <th>Sukūrimo data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(doc <- docs) {
+                            <tr>
+                                <td>@doc.file_name</td>
+                                <td>@doc.title</td>
+                                <td>@doc.date_created</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+}

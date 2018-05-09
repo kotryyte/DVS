@@ -1,0 +1,116 @@
+@import forms.UserDescriptionForm
+@(user: User, descriptionForm: Form[UserDescriptionForm], message: String)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Redaguoti vartotojo aprašymą</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+    @form(routes.UserController.create(), 'class -> "form", 'enctype -> "multipart/form-data") {
+        @if(message != null) {
+            <div class="col-sm-12 margin-t-10">
+                <div class="alert alert-success">
+                    <strong>Duomenys atnaujinti!</strong>@message
+                </div>
+            </div>
+        }
+
+        <div class="col-sm-12">
+            @if(descriptionForm.hasGlobalErrors) {
+                <p class="error">
+                    <span class="label label-danger">@descriptionForm.globalError.message</span>
+                </p>
+            }
+
+            <fieldset>
+                @inputText(
+                    descriptionForm("user_name"),
+                    'placeholder -> Messages("user.name"),
+                    '_label -> Messages("user.name"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_surname"),
+                    '_label -> Messages("user.surname"),
+                    'placeholder -> Messages("user.surname"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_city"),
+                    'placeholder -> Messages("user.name"),
+                    '_label -> Messages("user.name"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_country"),
+                    'placeholder -> Messages("user.name"),
+                    '_label -> Messages("user.name"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_phone"),
+                    '_label -> Messages("user.phone"),
+                    'placeholder -> Messages("user.phone"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_mail"),
+                    '_label -> Messages("user.mail"),
+                    'placeholder -> Messages("user.mail"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    descriptionForm("user_wanted_position"),
+                    '_label -> Messages("user.mail"),
+                    'placeholder -> Messages("user.mail"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @textarea(
+                    descriptionForm("user_work_experience"),
+                    '_label -> Messages("user.workexp"),
+                    'placeholder -> Messages("user.workexp"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @textarea(
+                    descriptionForm("user_skills"),
+                    '_label -> Messages("user.skills"),
+                    'placeholder -> Messages("user.skills"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @textarea(
+                    descriptionForm("user_description"),
+                    '_label -> Messages("user.description"),
+                    'placeholder -> Messages("user.description"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+            </fieldset>
+
+            <div class="form-actions margin-t-10">
+                <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+            </div>
+
+
+
+        </div>
+    </div>
+}
+
+
+}

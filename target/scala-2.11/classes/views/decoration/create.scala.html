@@ -1,0 +1,84 @@
+@import forms.DecorationForm
+@import models.Decoration.DecorationTypeEnum
+@(user: User, decorationForm: Form[DecorationForm], message: String)
+@import helper._
+
+@main(user){
+
+    <div class="col-sm-12">
+        <div class="title-container">
+            <div class="title-h2">
+                <h2>Eksponato redagavimo panelė</h2>
+                <p>Pasirinkite norimus eksponatus, keiskite jų aprašymą pavadinimą bei kitą susijusią informaciją</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+    @form(routes.DecorationController.createBlank(), 'class -> "form", 'enctype -> "multipart/form-data") {
+        @if(message != null) {
+            <div class="col-sm-12 margin-t-10">
+                <div class="alert alert-success">
+                    <strong>Duomenys atnaujinti!</strong>@message
+                </div>
+            </div>
+        }
+
+        <div class="col-sm-12">
+            @if(decorationForm.hasGlobalErrors) {
+                <p class="error">
+                    <span class="label label-danger">@decorationForm.globalError.message</span>
+                </p>
+            }
+
+            <fieldset>
+                @inputText(
+                    decorationForm("decorationId"),
+                    'type -> "hidden",
+                    '_label -> null,
+                    'required -> false,
+                    '_help -> Messages("null")
+                )
+                @inputText(
+                    decorationForm("name"),
+                    'placeholder -> Messages("email"),
+                    '_label -> Messages("form.title"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                @inputText(
+                    decorationForm("description"),
+                    'placeholder -> Messages("description"),
+                    '_label -> Messages("form.title"),
+                    '_help -> Messages("null"),
+                    'class -> "form-control"
+                )
+                <select name="decorationType" class="btn-primary">
+                @for(cType <- DecorationTypeEnum.values()){
+                    <option value="@cType.name()">@cType.name()</option>
+                }
+                </select>
+
+                @inputText(
+                    decorationForm("isEnabled"),
+                    'placeholder -> Messages("description"),
+                    '_label -> Messages("form.title")
+                )
+            </fieldset>
+
+            <div class="margin-t-10">
+                <input type="file" name="picture">
+            </div>
+
+            <div class="form-actions margin-t-10">
+                <input type="submit" class="btn btn-primary" value="@Messages("submit.button")">
+            </div>
+
+
+
+        </div>
+    </div>
+}
+
+
+}

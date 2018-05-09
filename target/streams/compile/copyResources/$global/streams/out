@@ -1,0 +1,7 @@
+[debug] Copy resource mappings: 
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/routes,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/routes)
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/messages.en,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/messages.en)
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/application.conf,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/application.conf)
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/evolutions,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/evolutions)
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/evolutions/default,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/evolutions/default)
+[debug] 	(/home/mindaugas/Documents/PlayApplication/conf/evolutions/default/1.sql,/home/mindaugas/Documents/PlayApplication/target/scala-2.11/classes/evolutions/default/1.sql)
